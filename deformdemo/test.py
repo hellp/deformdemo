@@ -59,7 +59,7 @@ class CheckboxChoiceWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertFalse(browser.is_checked("deformField1-0"))
@@ -73,7 +73,7 @@ class CheckboxChoiceWidgetTests(Base, unittest.TestCase):
         browser.click("deformField1-0")
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_checked("deformField1-0"))
         captured = browser.get_text('css=#captured')
         self.assertTrue(captured in (
@@ -89,7 +89,7 @@ class CheckboxChoiceWidgetTests(Base, unittest.TestCase):
         browser.click("deformField1-2")
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_checked("deformField1-0"))
         self.assertTrue(browser.is_checked("deformField1-1"))
         self.assertTrue(browser.is_checked("deformField1-2"))
@@ -136,14 +136,14 @@ class CheckedInputWidgetTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('css=#captured'), 'None')
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_value('deformField1-confirm'), '')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_empty(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertEqual(browser.get_value('deformField1'), '')
@@ -157,7 +157,7 @@ class CheckedInputWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1-confirm', 'this')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Invalid email address')
         self.assertEqual(browser.get_value('deformField1'), 'this')
@@ -171,7 +171,7 @@ class CheckedInputWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1-confirm', 'that@example.com')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Fields did not match')
         self.assertEqual(browser.get_value('deformField1'), 'this@example.com')
@@ -186,7 +186,7 @@ class CheckedInputWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1-confirm', 'user@example.com')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), 'user@example.com')
         self.assertEqual(browser.get_value('deformField1-confirm'),
                          'user@example.com')
@@ -202,7 +202,7 @@ class CheckedInputWidgetWithMaskTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('css=#captured'), 'None')
         self.assertEqual(browser.get_value('deformField1'), '###-##-####')
         self.assertEqual(browser.get_value('deformField1-confirm'), '')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_type_bad_input(self):
         import time
@@ -247,7 +247,7 @@ class CheckedPasswordWidgetTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('css=#captured'), 'None')
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_value('deformField1-confirm'), '')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(
             browser.get_attribute('css=#deformField1@type'),
             'password')
@@ -260,7 +260,7 @@ class CheckedPasswordWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertEqual(browser.get_value('deformField1'), '')
@@ -280,7 +280,7 @@ class CheckedPasswordWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1-confirm', 'this')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node),
                          'Shorter than minimum length 5')
@@ -301,7 +301,7 @@ class CheckedPasswordWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1-confirm', 'that123')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node),
                          'Password did not match confirm')
@@ -323,7 +323,7 @@ class CheckedPasswordWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1-confirm', 'this123')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), 'this123')
         self.assertEqual(browser.get_value('deformField1-confirm'), 'this123')
         self.assertSimilarRepr(browser.get_text('css=#captured'),
@@ -343,7 +343,7 @@ class DateInputWidgetTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('css=.req'), '*')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
         self.assertEqual(browser.get_value('deformField1'), '2010-05-05')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_empty(self):
         browser.open(self.url)
@@ -351,11 +351,11 @@ class DateInputWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1', '')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
 
     def test_submit_tooearly(self):
         browser.open(self.url)
@@ -365,12 +365,12 @@ class DateInputWidgetTests(Base, unittest.TestCase):
         browser.click('link=4')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node),
                          '2010-05-04 is earlier than earliest date 2010-05-05')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
 
     def test_submit_success(self):
         browser.open(self.url)
@@ -380,7 +380,7 @@ class DateInputWidgetTests(Base, unittest.TestCase):
         browser.click('link=6')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#captured'),
                          "{'date': datetime.date(2010, 5, 6)}")
         self.assertEqual(browser.get_value('deformField1'), '2010-05-06')
@@ -393,7 +393,7 @@ class DateTimeInputWidgetTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('css=.req'), '*')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
         self.assertEqual(browser.get_value('deformField1'), '2010-05-06 12:00:00')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_empty(self):
         browser.open(self.url)
@@ -401,11 +401,11 @@ class DateTimeInputWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1', '')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
 
     def test_submit_tooearly(self):
         browser.open(self.url)
@@ -415,12 +415,12 @@ class DateTimeInputWidgetTests(Base, unittest.TestCase):
         browser.click('link=5')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node),
                          '2010-05-05 12:00:00+00:00 is earlier than earliest datetime 2010-05-05 12:30:00+00:00')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
 
     def test_submit_success(self):
         browser.open(self.url)
@@ -430,7 +430,7 @@ class DateTimeInputWidgetTests(Base, unittest.TestCase):
         browser.click('link=7')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.get_text('css=#captured').startswith(
             "{'date_time': datetime.datetime(2010, 5, 7, 12, 0, tzinfo"))
         self.assertEqual(browser.get_value('deformField1'), '2010-05-07 12:00:00')
@@ -445,21 +445,21 @@ class DatePartsWidgetTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_value('deformField1-month'), '')
         self.assertEqual(browser.get_value('deformField1-day'), '')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_empty(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_value('deformField1-month'), '')
         self.assertEqual(browser.get_value('deformField1-day'), '')
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
 
     def test_submit_only_year(self):
         browser.open(self.url)
@@ -467,14 +467,14 @@ class DatePartsWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1', '2010')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Incomplete date')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
         self.assertEqual(browser.get_value('deformField1'), '2010')
         self.assertEqual(browser.get_value('deformField1-month'), '')
         self.assertEqual(browser.get_value('deformField1-day'), '')
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
 
     def test_submit_only_year_and_month(self):
         browser.open(self.url)
@@ -483,14 +483,14 @@ class DatePartsWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1-month', '1')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Incomplete date')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
         self.assertEqual(browser.get_value('deformField1'), '2010')
         self.assertEqual(browser.get_value('deformField1-month'), '1')
         self.assertEqual(browser.get_value('deformField1-day'), '')
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
 
     def test_submit_tooearly(self):
         browser.open(self.url)
@@ -500,7 +500,7 @@ class DatePartsWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1-day', '1')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node),
                          '2008-01-01 is earlier than earliest date 2010-01-01')
@@ -508,7 +508,7 @@ class DatePartsWidgetTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_value('deformField1'), '2008')
         self.assertEqual(browser.get_value('deformField1-month'), '1')
         self.assertEqual(browser.get_value('deformField1-day'), '1')
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
 
     def test_submit_success(self):
         browser.open(self.url)
@@ -518,7 +518,7 @@ class DatePartsWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1-day', '1')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#captured'),
                          "{'date': datetime.date(2010, 1, 1)}")
         self.assertEqual(browser.get_value('deformField1'), '2010')
@@ -530,7 +530,7 @@ class EditFormTests(Base, unittest.TestCase):
     def test_render_default(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField1'))
         self.assertTrue(browser.is_element_present('css=#req-deformField3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField4'))
@@ -554,7 +554,7 @@ class EditFormTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
@@ -565,7 +565,7 @@ class EditFormTests(Base, unittest.TestCase):
         browser.type('deformField3', 'name')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertFalse(browser.is_element_present('css=#error-deformField1'))
         self.assertFalse(browser.is_element_present('css=#error-deformField3'))
         self.assertFalse(browser.is_element_present('css=#error-deformField4'))
@@ -584,7 +584,7 @@ class MappingWidgetTests(Base, unittest.TestCase):
     def test_render_default(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField1'))
         self.assertTrue(browser.is_element_present('css=#req-deformField3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField4'))
@@ -608,7 +608,7 @@ class MappingWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField1'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField3'),
@@ -624,7 +624,7 @@ class MappingWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1', 'notanumber')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField1'),
                          '"notanumber" is not a number')
         self.assertEqual(browser.get_text('css=#error-deformField3'),
@@ -644,7 +644,7 @@ class MappingWidgetTests(Base, unittest.TestCase):
         browser.type('deformField4-day', 'day')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertFalse(browser.is_element_present('css=#error-deformField1'))
         self.assertFalse(browser.is_element_present('css=#error-deformField3'))
         self.assertEqual(browser.get_text('css=#error-deformField4'),
@@ -666,7 +666,7 @@ class MappingWidgetTests(Base, unittest.TestCase):
         browser.type('deformField4-day', '1')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertFalse(browser.is_element_present('css=#error-deformField1'))
         self.assertFalse(browser.is_element_present('css=#error-deformField3'))
         self.assertFalse(browser.is_element_present('css=#error-deformField4'))
@@ -684,7 +684,7 @@ class FieldDefaultTests(Base, unittest.TestCase):
     url = "/fielddefaults/"
     def test_render_default(self):
         browser.open(self.url)
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField1'))
         self.assertTrue(browser.is_element_present('css=#req-deformField2'))
         self.assertTrue(browser.is_element_present('css=#req-deformField3'))
@@ -702,7 +702,7 @@ class FieldDefaultTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), 'Grandaddy')
         self.assertEqual(browser.get_attribute('deformField1@name'), 'artist')
         self.assertEqual(browser.get_value('deformField2'),
@@ -722,7 +722,7 @@ class FieldDefaultTests(Base, unittest.TestCase):
         browser.type('deformField3', 'ghi')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), 'abc')
         self.assertEqual(browser.get_value('deformField2'), 'def')
         self.assertEqual(browser.get_value('deformField3'), 'ghi')
@@ -734,7 +734,7 @@ class NonRequiredFieldTests(Base, unittest.TestCase):
     url = "/nonrequiredfields/"
     def test_render_default(self):
         browser.open(self.url)
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField1'))
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_attribute('deformField1@name'), 'required')
@@ -748,7 +748,7 @@ class NonRequiredFieldTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_value('deformField2'), '')
         self.assertEqual(browser.get_text('css=#error-deformField1'),
@@ -761,7 +761,7 @@ class NonRequiredFieldTests(Base, unittest.TestCase):
         browser.type('deformField1', 'abc')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), 'abc')
         self.assertEqual(browser.get_value('deformField2'), '')
         self.assertSimilarRepr(
@@ -775,7 +775,7 @@ class NonRequiredFieldTests(Base, unittest.TestCase):
         browser.type('deformField2', 'def')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), 'abc')
         self.assertEqual(browser.get_value('deformField2'), 'def')
         self.assertSimilarRepr(
@@ -787,7 +787,7 @@ class HiddenFieldWidgetTests(Base, unittest.TestCase):
     def test_render_default(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_attribute('deformField1@name'), 'sneaky')
         self.assertEqual(browser.get_value('deformField1'), 'true')
         self.assertEqual(browser.get_text('css=#captured'), 'None')
@@ -797,7 +797,7 @@ class HiddenFieldWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_attribute('deformField1@name'), 'sneaky')
         self.assertEqual(browser.get_value('deformField1'), 'true')
         self.assertEqual(browser.get_text('css=#captured'), "{'sneaky': True}")
@@ -807,7 +807,7 @@ class HiddenmissingTests(Base, unittest.TestCase):
     def test_render_default(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_attribute('deformField1@name'), 'title')
         self.assertEqual(browser.get_attribute('deformField2@name'), 'number')
         self.assertEqual(browser.get_value('deformField1'), '')
@@ -820,7 +820,7 @@ class HiddenmissingTests(Base, unittest.TestCase):
         browser.type('deformField1', 'yup')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_attribute('deformField1@name'), 'title')
         self.assertEqual(browser.get_value('deformField1'), 'yup')
         self.assertSimilarRepr(
@@ -833,7 +833,7 @@ class FileUploadTests(Base, unittest.TestCase):
     def test_render_default(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField1'))
         self.assertEqual(browser.get_attribute('deformField1@name'), 'upload')
         self.assertEqual(browser.get_value('deformField1'), '')
@@ -844,7 +844,7 @@ class FileUploadTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertEqual(browser.get_attribute('deformField1@name'), 'upload')
@@ -860,7 +860,7 @@ class FileUploadTests(Base, unittest.TestCase):
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
 
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_attribute('deformField1@name'), 'upload')
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_text('css=#deformField1-filename'),
@@ -894,7 +894,7 @@ class InterFieldValidationTests(Base, unittest.TestCase):
     def test_render_default(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField1'))
         self.assertTrue(browser.is_element_present('css=#req-deformField2'))
         self.assertEqual(browser.get_attribute('deformField1@name'), 'name')
@@ -908,7 +908,7 @@ class InterFieldValidationTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         error_node2 = 'css=#error-deformField2'
@@ -925,7 +925,7 @@ class InterFieldValidationTests(Base, unittest.TestCase):
         browser.type('deformField1', 'abc')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertFalse(browser.is_element_present('css=#error-deformField1'))
         error_node2 = 'css=#error-deformField2'
         self.assertEqual(browser.get_text(error_node2), 'Required')
@@ -942,7 +942,7 @@ class InterFieldValidationTests(Base, unittest.TestCase):
         browser.type('deformField2', 'def')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertFalse(browser.is_element_present('css=#error-deformField1'))
         error_node2 = 'css=#error-deformField2'
         self.assertEqual(browser.get_text(error_node2),
@@ -960,7 +960,7 @@ class InterFieldValidationTests(Base, unittest.TestCase):
         browser.type('deformField2', 'abcdef')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertFalse(browser.is_element_present('css=#error-deformField1'))
         self.assertFalse(browser.is_element_present('css=#error-deformField2'))
         self.assertEqual(browser.get_attribute('deformField1@name'), 'name')
@@ -974,7 +974,7 @@ class InternationalizationTests(Base, unittest.TestCase):
     url = "/i18n/"
     def test_render_default(self):
         browser.open(self.url)
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField1'))
         self.assertEqual(browser.get_attribute('deformField1@name'), 'number')
         self.assertEqual(browser.get_value('deformField1'), '')
@@ -987,7 +987,7 @@ class InternationalizationTests(Base, unittest.TestCase):
     def test_render_en(self):
         browser.open("%s?_LOCALE_=en" % self.url)
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField1'))
         label = browser.get_text('css=label')
         self.assertEqual(label, 'A number between 1 and 10*')
@@ -997,7 +997,7 @@ class InternationalizationTests(Base, unittest.TestCase):
     def test_render_ru(self):
         browser.open("%s?_LOCALE_=ru" % self.url)
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField1'))
         label = browser.get_text('css=label')
         self.assertEqual(label, u'Число между 1 и 10*')
@@ -1009,8 +1009,8 @@ class InternationalizationTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        errorMsgLbl = browser.get_text('css=.errorMsgLbl')
-        errorMsg = browser.get_text('css=.errorMsg')
+        errorMsgLbl = browser.get_text('css=.error > h3')
+        errorMsg = browser.get_text('css=.error > p')
         self.assertEqual(errorMsgLbl,
                          'There was a problem with your submission')
         self.assertEqual(errorMsg, 'Errors have been highlighted below')
@@ -1026,8 +1026,8 @@ class InternationalizationTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        errorMsgLbl = browser.get_text('css=.errorMsgLbl')
-        errorMsg = browser.get_text('css=.errorMsg')
+        errorMsgLbl = browser.get_text('css=.error > h3')
+        errorMsg = browser.get_text('css=.error > p')
         self.assertEqual(errorMsgLbl,
                          u'Данные которые вы предоставили содержат ошибку')
         self.assertEqual(errorMsg,
@@ -1045,8 +1045,8 @@ class InternationalizationTests(Base, unittest.TestCase):
         browser.type('deformField1', '0')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        errorMsgLbl = browser.get_text('css=.errorMsgLbl')
-        errorMsg = browser.get_text('css=.errorMsg')
+        errorMsgLbl = browser.get_text('css=.error > h3')
+        errorMsg = browser.get_text('css=.error > p')
         self.assertEqual(errorMsgLbl,
                          'There was a problem with your submission')
         self.assertEqual(errorMsg, 'Errors have been highlighted below')
@@ -1064,8 +1064,8 @@ class InternationalizationTests(Base, unittest.TestCase):
         browser.type('deformField1', '0')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        errorMsgLbl = browser.get_text('css=.errorMsgLbl')
-        errorMsg = browser.get_text('css=.errorMsg')
+        errorMsgLbl = browser.get_text('css=.error > h3')
+        errorMsg = browser.get_text('css=.error > p')
         self.assertEqual(errorMsgLbl,
                          u'Данные которые вы предоставили содержат ошибку')
         self.assertEqual(errorMsg,
@@ -1084,8 +1084,8 @@ class InternationalizationTests(Base, unittest.TestCase):
         browser.type('deformField1', '11')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        errorMsgLbl = browser.get_text('css=.errorMsgLbl')
-        errorMsg = browser.get_text('css=.errorMsg')
+        errorMsgLbl = browser.get_text('css=.error > h3')
+        errorMsg = browser.get_text('css=.error > p')
         self.assertEqual(errorMsgLbl,
                          'There was a problem with your submission')
         self.assertEqual(errorMsg, 'Errors have been highlighted below')
@@ -1103,8 +1103,8 @@ class InternationalizationTests(Base, unittest.TestCase):
         browser.type('deformField1', '11')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        errorMsgLbl = browser.get_text('css=.errorMsgLbl')
-        errorMsg = browser.get_text('css=.errorMsg')
+        errorMsgLbl = browser.get_text('css=.error > h3')
+        errorMsg = browser.get_text('css=.error > p')
         self.assertEqual(errorMsgLbl,
                          u'Данные которые вы предоставили содержат ошибку')
         self.assertEqual(errorMsg,
@@ -1127,7 +1127,7 @@ class PasswordWidgetTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_attribute('css=#deformField1@type'),
                          'password')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
                          
     def test_render_submit_empty(self):
         browser.open(self.url)
@@ -1140,7 +1140,7 @@ class PasswordWidgetTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_attribute('css=#deformField1@type'),
                          'password')
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
 
@@ -1157,7 +1157,7 @@ class PasswordWidgetTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_value('deformField1'), 'abcdef123')
         self.assertEqual(browser.get_attribute('css=#deformField1@type'),
                          'password')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
 class RadioChoiceWidgetTests(Base, unittest.TestCase):
     url = "/radiochoice/"
@@ -1176,7 +1176,7 @@ class RadioChoiceWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.get_text('css=.errorMsgLbl'))
+        self.assertTrue(browser.get_text('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertFalse(browser.is_checked("deformField1-0"))
@@ -1190,7 +1190,7 @@ class RadioChoiceWidgetTests(Base, unittest.TestCase):
         browser.click("deformField1-0")
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_checked("deformField1-0"))
         self.assertSimilarRepr(
             browser.get_text('css=#captured'),
@@ -1223,18 +1223,18 @@ class SequenceOfRadioChoices(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('deformField1-addtext'),
                          'Add Pepper Chooser')
         self.assertEqual(browser.get_text('css=#captured'), "{'peppers': []}")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_two_filled(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
         browser.click('deformField1-seqAdd')
         browser.click('deformField1-seqAdd')
-        browser.click('dom=document.forms[0].elements[5]')
-        browser.click('dom=document.forms[0].elements[11]')
+        browser.click('dom=document.forms[0].elements[6]')
+        browser.click('dom=document.forms[0].elements[12]')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         captured = browser.get_text('css=#captured')
         self.assertEqual(eval(captured),
                          {'peppers': ['habanero', 'jalapeno']})
@@ -1254,7 +1254,7 @@ class SequenceOfFileUploads(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         self.assertEqual(browser.get_text('deformField1-addtext'), 'Add Upload')
         self.assertEqual(browser.get_text('css=#captured'), "{'uploads': []}")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_two_unfilled(self):
         browser.open(self.url)
@@ -1263,7 +1263,7 @@ class SequenceOfFileUploads(Base, unittest.TestCase):
         browser.click('deformField1-seqAdd')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField4'),
@@ -1280,7 +1280,7 @@ class SequenceOfFileUploads(Base, unittest.TestCase):
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
 
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_attribute('deformField3@name'), 'upload')
         self.assertEqual(browser.get_value('deformField3'), '')
         self.assertEqual(browser.get_text('css=#deformField3-filename'),
@@ -1299,7 +1299,7 @@ class SequenceOfFileUploads(Base, unittest.TestCase):
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
 
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_attribute('deformField3@name'), 'upload')
         self.assertEqual(browser.get_value('deformField3'), '')
         self.assertEqual(browser.get_text('css=#deformField3-filename'),
@@ -1374,7 +1374,7 @@ class SequenceOfFileUploadsWithInitialItem(Base, unittest.TestCase):
                          'upload')
         self.assertEqual(browser.get_attribute('deformField3@type'),
                          'file')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#captured'), 'None')
 
     def test_submit_none_added(self):
@@ -1382,7 +1382,7 @@ class SequenceOfFileUploadsWithInitialItem(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         captured = browser.get_text('css=#captured')
@@ -1398,7 +1398,7 @@ class SequenceOfFileUploadsWithInitialItem(Base, unittest.TestCase):
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
 
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
         # first element present
         self.assertEqual(browser.get_attribute('deformField3@name'), 'upload')
@@ -1436,7 +1436,7 @@ class SequenceOfMappings(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('deformField1-addtext'),
                          'Add Person')
         self.assertEqual(browser.get_text('css=#captured'), "{'people': []}")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_two_unfilled(self):
         browser.open(self.url)
@@ -1445,7 +1445,7 @@ class SequenceOfMappings(Base, unittest.TestCase):
         browser.click('deformField1-seqAdd')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField6'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField7'),
@@ -1465,7 +1465,7 @@ class SequenceOfMappings(Base, unittest.TestCase):
         browser.type("age", '23')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_attribute('deformField6@name'), 'name')
         self.assertEqual(browser.get_value('deformField6'), 'name')
         self.assertEqual(browser.get_attribute('deformField7@name'), 'age')
@@ -1486,7 +1486,7 @@ class SequenceOfMappings(Base, unittest.TestCase):
         browser.type(age2, '26')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_attribute('deformField6@name'), 'name')
         self.assertEqual(browser.get_value('deformField6'), 'name-changed')
         self.assertEqual(browser.get_attribute('deformField7@name'), 'age')
@@ -1506,7 +1506,7 @@ class SequenceOfMappings(Base, unittest.TestCase):
         browser.click('deformField5-close') # remove the first mapping
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_attribute('deformField6@name'), 'name')
         self.assertEqual(browser.get_value('deformField6'), 'name2')
         self.assertEqual(browser.get_attribute('deformField7@name'), 'age')
@@ -1531,7 +1531,7 @@ class SequenceOfMappingsWithInitialItem(Base, unittest.TestCase):
                          'name')
         self.assertEqual(browser.get_attribute('css=#deformField7@name'),
                          'age')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#captured'), 'None')
 
     def test_submit_none_added(self):
@@ -1546,7 +1546,7 @@ class SequenceOfMappingsWithInitialItem(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('css=#error-deformField7'),
                          'Required')
         self.assertEqual(browser.get_text('css=#captured'), "None")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
 
     def test_submit_add_one(self):
         browser.open(self.url)
@@ -1576,7 +1576,7 @@ class SequenceOfMappingsWithInitialItem(Base, unittest.TestCase):
                          'age')
         self.assertEqual(browser.get_attribute('css=#deformField10@value'),
                          '25')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         captured = browser.get_text('css=#captured')
         self.assertEqual(eval(captured),
                          {'people': [{'name': 'name0', 'age': 23},
@@ -1600,7 +1600,7 @@ class SequenceOfAutocompletes(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('deformField1-addtext'),
                          'Add Text')
         self.assertEqual(browser.get_text('css=#captured'), "{'texts': []}")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_two_unfilled(self):
         browser.open(self.url)
@@ -1609,7 +1609,7 @@ class SequenceOfAutocompletes(Base, unittest.TestCase):
         browser.click('deformField1-seqAdd')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField4'),
@@ -1632,7 +1632,7 @@ class SequenceOfAutocompletes(Base, unittest.TestCase):
         browser.type(added, 'baz')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         captured = browser.get_text('css=#captured')
         self.assertSimilarRepr(
             captured,  
@@ -1655,7 +1655,7 @@ class SequenceOfDateInputs(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('deformField1-addtext'),
                          'Add Date')
         self.assertEqual(browser.get_text('css=#captured'), "{'dates': []}")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_two_unfilled(self):
         browser.open(self.url)
@@ -1664,7 +1664,7 @@ class SequenceOfDateInputs(Base, unittest.TestCase):
         browser.click('deformField1-seqAdd')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField4'),
@@ -1682,7 +1682,7 @@ class SequenceOfDateInputs(Base, unittest.TestCase):
         browser.click('link=6')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         captured = browser.get_text('css=#captured')
         self.assertTrue(captured.startswith(u"{'dates': [datetime.date"))
 
@@ -1707,17 +1707,17 @@ class SequenceOfConstrainedLength(Base, unittest.TestCase):
         browser.type('deformField4', 'hello2')
         browser.click('deformField1-seqAdd')
         browser.click('deformField1-seqAdd')
-        browser.type('dom=document.forms[0].elements[6]', 'hello3')
-        browser.type('dom=document.forms[0].elements[7]', 'hello4')
+        browser.type('dom=document.forms[0].elements[7]', 'hello3')
+        browser.type('dom=document.forms[0].elements[8]', 'hello4')
         self.assertFalse(browser.is_visible('deformField1-seqAdd'))
         browser.click('deformField3-close')
         self.assertTrue(browser.is_visible('deformField1-seqAdd'))
         browser.click('deformField1-seqAdd')
         self.assertFalse(browser.is_visible('deformField1-seqAdd'))
-        browser.type('dom=document.forms[0].elements[7]', 'hello5')
+        browser.type('dom=document.forms[0].elements[8]', 'hello5')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField3'), 'hello2')
         self.assertEqual(browser.get_value('deformField4'), 'hello3')
         self.assertEqual(browser.get_value('deformField5'), 'hello4')
@@ -1745,7 +1745,7 @@ class SequenceOfRichTextWidgetTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('deformField1-addtext'),
                          'Add Text')
         self.assertEqual(browser.get_text('css=#captured'), "{'texts': []}")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_two_unfilled(self):
         browser.open(self.url)
@@ -1754,7 +1754,7 @@ class SequenceOfRichTextWidgetTests(Base, unittest.TestCase):
         browser.click('deformField1-seqAdd')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField4'),
@@ -1772,7 +1772,7 @@ class SequenceOfRichTextWidgetTests(Base, unittest.TestCase):
         browser.type('tinymce', 'yo')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         captured = browser.get_text('css=#captured')
         self.assertSimilarRepr(
             captured, 
@@ -1795,7 +1795,7 @@ class SequenceOfMaskedTextInputs(Base, unittest.TestCase):
         self.assertEqual(browser.get_text('deformField1-addtext'),
                          'Add Text')
         self.assertEqual(browser.get_text('css=#captured'), "{'texts': []}")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_two_unfilled(self):
         browser.open(self.url)
@@ -1804,7 +1804,7 @@ class SequenceOfMaskedTextInputs(Base, unittest.TestCase):
         browser.click('deformField1-seqAdd')
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField3'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField4'),
@@ -1824,7 +1824,7 @@ class SequenceOfMaskedTextInputs(Base, unittest.TestCase):
             time.sleep(.005)
         browser.click("submit")
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         captured = browser.get_text('css=#captured')
         self.assertSimilarRepr(
             captured,  "{'texts': [u'140-11-8866']}"
@@ -1865,7 +1865,7 @@ class SelectWidgetTests(Base, unittest.TestCase):
         browser.select('deformField1', 'index=1')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_selected_index('deformField1'), '1')
         captured = browser.get_text('css=#captured')
         self.assertSimilarRepr(
@@ -1892,7 +1892,7 @@ class TextInputWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField1'),
                          'Required')
         captured = browser.get_text('css=#captured')
@@ -1904,7 +1904,7 @@ class TextInputWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1', 'hello')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), 'hello')
         captured = browser.get_text('css=#captured')
         self.assertSimilarRepr(
@@ -1935,7 +1935,7 @@ class AutocompleteInputWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField1'),
                          'Required')
         captured = browser.get_text('css=#captured')
@@ -1952,7 +1952,7 @@ class AutocompleteInputWidgetTests(Base, unittest.TestCase):
         browser.click("//html/body/ul/li[2]")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         # this *should* be "bar" but i can't figure out how to make it so
         self.assertEqual(browser.get_value('deformField1'), u'b')
         captured = browser.get_text('css=#captured')
@@ -1978,7 +1978,7 @@ class AutocompleteRemoteInputWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField1'),
                          'Required')
         captured = browser.get_text('css=#captured')
@@ -1995,7 +1995,7 @@ class AutocompleteRemoteInputWidgetTests(Base, unittest.TestCase):
         browser.click("//html/body/ul/li[2]")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         # this *should* be "two" but i can't figure out how to make it so
         self.assertEqual(browser.get_value('deformField1'), u't')
         captured = browser.get_text('css=#captured')
@@ -2021,7 +2021,7 @@ class TextAreaWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField1'),
                          'Required')
         captured = browser.get_text('css=#captured')
@@ -2033,7 +2033,7 @@ class TextAreaWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1', 'hello')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), 'hello')
         captured = browser.get_text('css=#captured')
         self.assertSimilarRepr(
@@ -2054,7 +2054,7 @@ class DelayedRichTextWidgetTests(Base, unittest.TestCase):
         browser.type('tinymce', 'hello')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), '<p>hello</p>')
         captured = browser.get_text('css=#captured')
         self.assertSimilarRepr(
@@ -2078,7 +2078,7 @@ class RichTextWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField1'),
                          'Required')
         captured = browser.get_text('css=#captured')
@@ -2090,7 +2090,7 @@ class RichTextWidgetTests(Base, unittest.TestCase):
         browser.type('tinymce', 'hello')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), '<p>hello</p>')
         captured = browser.get_text('css=#captured')
         self.assertSimilarRepr(
@@ -2121,7 +2121,7 @@ class UnicodeEverywhereTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'), u'☃')
         captured = browser.get_text('css=#captured')
         self.assertTrue(
@@ -2185,7 +2185,7 @@ class TextAreaCSVWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'),
                          '1,hello,4.5\n2,goodbye,5.5')
         captured = browser.get_text('css=#captured')
@@ -2201,7 +2201,7 @@ class TextAreaCSVWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1', '1,2,3\nwrong')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertSimilarRepr(browser.get_text(error_node),
                          ('line 2: {\'1\': u\'"[\\\'wrong\\\']" has an '
@@ -2217,7 +2217,7 @@ class TextAreaCSVWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1', '')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertEqual(browser.get_value('deformField1'), '')
@@ -2242,7 +2242,7 @@ class TextInputCSVWidgetTests(Base, unittest.TestCase):
         browser.wait_for_page_to_load("30000")
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_value('deformField1'),
                          '1,hello,4.5')
         captured = browser.get_text('css=#captured')
@@ -2256,7 +2256,7 @@ class TextInputCSVWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1', '1,2,wrong')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertSimilarRepr(
             browser.get_text(error_node),
@@ -2272,7 +2272,7 @@ class TextInputCSVWidgetTests(Base, unittest.TestCase):
         browser.type('deformField1', '')
         browser.click('submit')
         browser.wait_for_page_to_load("30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         error_node = 'css=#error-deformField1'
         self.assertEqual(browser.get_text(error_node), 'Required')
         self.assertEqual(browser.get_value('deformField1'), '')
@@ -2291,7 +2291,7 @@ class MultipleFormsTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_attribute("deformField3@name"), 'name2')
         self.assertEqual(browser.get_value('deformField3'), '')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_first(self):
         browser.open(self.url)
@@ -2327,7 +2327,7 @@ class RequireOneFieldOrAnotherTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_value('deformField1'), '')
         self.assertEqual(browser.get_attribute("deformField2@name"), 'two')
         self.assertEqual(browser.get_value('deformField2'), '')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_submit_none_filled(self):
         browser.open(self.url)
@@ -2340,7 +2340,7 @@ class RequireOneFieldOrAnotherTests(Base, unittest.TestCase):
                          'Required if one is not supplied')
         captured = browser.get_text('css=#captured')
         self.assertEqual(captured, u"None")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
 
     def test_submit_one_filled(self):
         browser.open(self.url)
@@ -2353,14 +2353,14 @@ class RequireOneFieldOrAnotherTests(Base, unittest.TestCase):
             captured, 
             u"{'two': u'', 'one': u'one'}"
             )
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
 class AjaxFormTests(Base, unittest.TestCase):
     url = "/ajaxform/"
     def test_render_default(self):
         browser.open(self.url)
         browser.wait_for_page_to_load("30000")
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField1'))
         self.assertTrue(browser.is_element_present('css=#req-deformField3'))
         self.assertTrue(browser.is_element_present('css=#req-deformField4'))
@@ -2386,7 +2386,7 @@ class AjaxFormTests(Base, unittest.TestCase):
         browser.wait_for_condition(
             'selenium.browserbot.getCurrentWindow().jQuery.active == 0',
             "30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField1'),
                          'Required')
         self.assertEqual(browser.get_text('css=#error-deformField3'),
@@ -2404,7 +2404,7 @@ class AjaxFormTests(Base, unittest.TestCase):
         browser.wait_for_condition(
             'selenium.browserbot.getCurrentWindow().jQuery.active == 0',
             "30000")
-        self.assertTrue(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertTrue(browser.is_element_present('css=.error > h3'))
         self.assertEqual(browser.get_text('css=#error-deformField1'),
                          '"notanumber" is not a number')
         self.assertEqual(browser.get_text('css=#error-deformField3'),
@@ -2457,7 +2457,7 @@ class TextInputMaskTests(Base, unittest.TestCase):
         self.assertEqual(browser.get_value('deformField1'), '___-__-____')
         self.assertEqual(browser.get_attribute("deformField2@name"), 'date')
         self.assertEqual(browser.get_value('deformField2'), '')
-        self.assertFalse(browser.is_element_present('css=.errorMsgLbl'))
+        self.assertFalse(browser.is_element_present('css=.error > h3'))
 
     def test_type_bad_input(self):
         import time
